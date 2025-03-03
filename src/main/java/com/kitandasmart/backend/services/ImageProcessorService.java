@@ -20,8 +20,7 @@ public class ImageProcessorService {
 
 
     // Setter for imagePath to be used when image is uploaded
-    @Setter
-    private String imagePath;
+
 
     @Value("${tesseract.datapath}")
     private String tesseractDataPath;
@@ -41,7 +40,7 @@ public class ImageProcessorService {
             //validateInputs();
             createOutputDirectory();
 
-            //String processedImagePath = preprocessImage();
+            String processedImagePath = preprocessImage(filePath);
             String ocrText = performOcr(filePath);
             String polishedText = polishOcrText(ocrText);
 
@@ -54,14 +53,7 @@ public class ImageProcessorService {
         return null;
     }
 
-    private void validateInputs() throws IllegalStateException {
-        if (!Files.exists(Paths.get(imagePath))) {
-            throw new IllegalStateException("Input image not found at: " + imagePath);
-        }
-        if (!Files.exists(Paths.get(tesseractDataPath))) {
-            throw new IllegalStateException("Tesseract data path not found at: " + tesseractDataPath);
-        }
-    }
+
 
     private void createOutputDirectory() throws Exception {
         Path outputPath = Paths.get(outputDirectory);
@@ -70,7 +62,7 @@ public class ImageProcessorService {
         }
     }
 
-    private String preprocessImage() {
+    private String preprocessImage(String imagePath) {
         System.out.println("Preprocessing image: {}"+ imagePath);
 
         Mat image = Imgcodecs.imread(imagePath, Imgcodecs.IMREAD_GRAYSCALE);
