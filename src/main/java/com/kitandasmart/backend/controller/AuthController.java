@@ -36,8 +36,6 @@ public class AuthController {
     {
         String magicToken= authService.generateToken(email);
         userService.registerUser(email);
-        // Authenticate using app password
-        Session session = emailService.getSession();
 
         emailService.sendEmails(email, magicToken);
         return ResponseEntity.ok("Magic token sent to your email");

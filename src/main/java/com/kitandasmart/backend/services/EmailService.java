@@ -12,41 +12,25 @@ import java.util.Properties;
 
 @Service
 public class EmailService {
-    @Value("${spring.mail.username}")
+    @Value("${email}")
     private String email;
-    @Value("${smtp.server}")
-    private String smtp_server;
-    @Value("${smtp.port}")
-    private int smtp_port;
-    @Value("${spring.mail.password}")
-    private String password;
+    @Value("${client_id}")
+    private String client_id;
+    @Value("${client_secret}")
+    private String client_secret;
+    @Value("${tenant_it}")
+    private String tenant_it;
 
-    @NotNull
-    public Session getSession() {
-        // Set SMTP properties
 
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", smtp_server);
-        properties.put("mail.smtp.port", smtp_port);
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(email, password);
-            }
-        });
-        return session;
-    }
 
     public void sendEmails(String userEmail, String magicToken) {
         try {
             // Create GraphEmailSender with your credentials
             GraphEmailSender sender = new GraphEmailSender(
-                    "3241235d-7f17-4243-8a5b-0ba5aef8e63f",
-                    "S1m8Q~Y2jopF0Ut3MnUc13DJCfjF.q_OoqY4Iama",
-                    "cf32cf73-55cd-4b11-9cb4-6ed67808cff3",
-                    "noreply@kitandasmart.com"
+                    client_id,
+                    client_secret,
+                    tenant_it,
+                    email
             );
 
             // Send the login token email
