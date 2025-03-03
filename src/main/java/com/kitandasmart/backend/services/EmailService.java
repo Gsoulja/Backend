@@ -18,7 +18,7 @@ public class EmailService {
     private String client_id;
     @Value("${client_secret}")
     private String client_secret;
-    @Value("${tenant_it}")
+    @Value("${tenant_id}")
     private String tenant_it;
 
 
