@@ -41,7 +41,7 @@ public class ImageProcessorService {
             createOutputDirectory();
 
             String processedImagePath = preprocessImage(filePath);
-            String ocrText = performOcr(filePath);
+            String ocrText = performOcr(processedImagePath);
             String polishedText = polishOcrText(ocrText);
 
             return outputResults(ocrText, polishedText);
